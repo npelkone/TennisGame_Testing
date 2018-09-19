@@ -20,12 +20,12 @@ public class TennisGameTest {
 // "player2 has advantage"
 // "player1 wins"
 // "player2 wins"
-	@Ignore
+	@Test
 	public void testTennisGame_Start() {
 		//Arrange
 		TennisGame game = new TennisGame();
 		//Act
-		String score = game.getScore() ;
+		String score = game.getScore();
 		// Assert
 		assertEquals("Initial score incorrect", "love - love", score);		
 	}
@@ -46,7 +46,7 @@ public class TennisGameTest {
 		game.player1Scored();
 		game.player2Scored();
 		//Act
-		String score = game.getScore() ;
+		String score = game.getScore();
 		// Assert
 		assertEquals("Tie score incorrect", "deuce", score);		
 	}
@@ -61,7 +61,27 @@ public class TennisGameTest {
 		game.player1Scored();
 		game.player1Scored();
 		//Act
+		String score = game.getScore();
 		// This statement should cause an exception
 		game.player1Scored();			
-	}		
+	}	
+	
+	@Test
+	public void testTennisGame_Player2HasAdvantage_ResultsException() throws TennisGameException {
+		//Arrange
+		TennisGame game = new TennisGame();
+		//Act
+		game.player1Scored();
+		game.player1Scored();
+		game.player1Scored();
+		
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		
+		//Act	
+		String score = game.getScore();
+		assertEquals("Player 2 score incorrect", "player2 has advantage", score);
+	}
 }
